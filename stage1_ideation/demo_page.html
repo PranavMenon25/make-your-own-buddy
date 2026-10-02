@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AccessFlow Demo Page</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: 60px auto; padding: 0 20px; }
+    h1 { color: #333; }
+    .card { border: 1px solid #ccc; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    label { display: block; margin-bottom: 6px; font-weight: bold; }
+    input, select { width: 100%; padding: 8px; margin-bottom: 16px; border: 1px solid #aaa; border-radius: 4px; font-size: 14px; box-sizing: border-box; }
+    input:focus, select:focus, button:focus, a:focus { outline: 3px solid #005fcc; outline-offset: 2px; }
+    button { padding: 10px 20px; background: #005fcc; color: white; border: none; border-radius: 4px; font-size: 14px; cursor: pointer; margin-right: 10px; }
+    button:hover { background: #004aaa; }
+    button.secondary { background: #666; }
+    a { color: #005fcc; }
+    #status { margin-top: 16px; padding: 10px; border-radius: 4px; display: none; }
+    #status.success { background: #d4edda; color: #155724; display: block; }
+    #status.error { background: #f8d7da; color: #721c24; display: block; }
+    nav a { margin-right: 16px; text-decoration: none; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <h1>AccessFlow Demo Page</h1>
+  <p>A simple page for testing keyboard navigation and mouse interaction.</p>
+
+  <nav aria-label="Main navigation">
+    <a href="#form">Expense Form</a>
+    <a href="#info">Info</a>
+    <a href="#about">About</a>
+  </nav>
+
+  <section class="card" id="form" aria-labelledby="form-heading">
+    <h2 id="form-heading">Submit an Expense Claim</h2>
+
+    <form id="expense-form" novalidate>
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="Jane Smith" />
+
+      <label for="amount">Amount (£)</label>
+      <input type="number" id="amount" name="amount" placeholder="0.00" min="0" />
+
+      <label for="category">Category</label>
+      <select id="category" name="category">
+        <option value="">-- Select a category --</option>
+        <option value="travel">Travel</option>
+        <option value="meals">Meals</option>
+        <option value="equipment">Equipment</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="description">Description</label>
+      <input type="text" id="description" name="description" placeholder="Brief description of the expense" />
+
+      <button type="submit" id="submit-btn">Submit Claim</button>
+      <button type="reset" class="secondary">Clear</button>
+    </form>
+
+    <div id="status" role="alert"></div>
+  </section>
+
+  <section class="card" id="info" aria-labelledby="info-heading">
+    <h2 id="info-heading">Info</h2>
+    <p>This page is used by AccessFlow to test whether a workflow can be completed using only a keyboard.</p>
+    <p><a href="#form">Back to form</a></p>
+  </section>
+
+  <section class="card" id="about" aria-labelledby="about-heading">
+    <h2 id="about-heading">About</h2>
+    <p>AccessFlow checks that workplace tools are accessible to everyone, including people who rely on keyboard navigation.</p>
+  </section>
+
+  <script>
+    document.getElementById('expense-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const amount = document.getElementById('amount').value.trim();
+      const category = document.getElementById('category').value;
+      const status = document.getElementById('status');
+
+      if (!name || !amount || !category) {
+        status.textContent = 'Please fill in all required fields.';
+        status.className = 'error';
+        return;
+      }
+
+      status.textContent = `Claim submitted! ${name} — £${amount} (${category})`;
+      status.className = 'success';
+    });
+  </script>
+</body>
+</html>
