@@ -1,0 +1,9 @@
+{
+  "servers": {
+    "accessflow": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["${workspaceFolder}/src/mcp/server.js"]
+    }
+  }
+}
